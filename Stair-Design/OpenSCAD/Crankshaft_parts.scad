@@ -1,15 +1,15 @@
 //ball_dia = 10;
 
 // ---------------PRINT FOLLOWING PARTS---------------
-print_start_bar = true;
+print_start_bar = false;
 print_joint_cubes = true;
-print_joint_bars = true;
-print_end_bar = true;
+print_joint_bars = false;
+print_end_bar = false;
 
 // ---------------CHANGEABLE VARIABLES---------------
 //Step Stats
 step_width = 20;
-step_amounts = 4;
+step_amounts = 3;
 
 //Main Bar
 bar_r = 5;
@@ -67,14 +67,30 @@ if(print_end_bar){
 //Joints Cubes
 if(step_amounts > 0){
     for(i = [0 : step_amounts]){
-        if(print_joint_cubes){
-            translate([0, start_bar_l/2+joint_cube[1]/2+step_width*i, 0])
-                cube(joint_cube, center=true);
+        y_offset = start_bar_l/2+step_width*i-joint_cube[1]/2;
+        startbar_printing = i != 0 || (i == 0 && print_start_bar);
+        endbar_printing = i != step_amounts || (i == step_amounts && print_end_bar);
+        if(print_joint_cubes && startbar_printing && endbar_printing){
+            difference(){
+                translate([0, start_bar_l/2+joint_cube[1]/2+step_width*i, 0])
+                    cube(joint_cube, center=true);
+                for(side = [bar_r*3, -bar_r*3]){
+                    difference(){
+                        translate([side, y_offset, 0])
+                            rotate(a = [90,0,0])cylinder(r=joint_bar_r*1.05, h=joint_l, $fn=60, center=true);
+                        //Indents
+                        k = joint_bar_r*1.3*1.03;
+                        for(j = [[k,k],[-k,k],[k,-k],[-k,-k]]){
+                            translate([side+j[0], y_offset, 0+j[1]])
+                                rotate(a = [90,0,0])cylinder(r=joint_bar_r, h=joint_l*2, $fn=60, center=true);
+                        }
+                    }
+                }
+            }
         }
         
 //Joint Bars
         if(i != 0 && print_joint_bars){
-            y_offset = start_bar_l/2+step_width*i-joint_cube[1]/2;
             side = i%2 == 0 ? bar_r*3 : -bar_r*3;
             difference(){
                 translate([side, y_offset, 0])
