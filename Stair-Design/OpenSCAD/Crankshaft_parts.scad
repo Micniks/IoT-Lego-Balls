@@ -1,15 +1,15 @@
 //ball_dia = 10;
 
 // ---------------PRINT FOLLOWING PARTS---------------
-print_start_bar = false;
+print_start_bar = true;
 print_joint_cubes = true;
-print_joint_bars = false;
-print_end_bar = false;
+print_joint_bars = true;
+print_end_bar = true;
 
 // ---------------CHANGEABLE VARIABLES---------------
 //Step Stats
 step_width = 20;
-step_amounts = 3;
+step_amounts = 4;
 
 //Main Bar
 bar_r = 5;
