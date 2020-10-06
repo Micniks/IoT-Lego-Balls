@@ -10,10 +10,15 @@ difference() {
     translate([0,0,6]) {
         //trekant dims
         rotate(-90,[0,1,0]) {
-            cylinder(40,9,9,$fn=3);
+            cylinder(30,9,9,$fn=3);
         }
-    } 
+    }
+    //trekant spids
+    translate([-30,0,1.5]) {
+        cylinder(13.5,7.8,0, $fn=4); 
+    }    
 }    
+
 
     //hul i cylinder
     difference(){
