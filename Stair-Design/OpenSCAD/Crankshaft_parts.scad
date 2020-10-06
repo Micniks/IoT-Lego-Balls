@@ -15,7 +15,6 @@ step_amounts = 4;
 bar_r = 5;
 start_bar_l = 60;
 end_bar_l = 10;
-indent_dis = bar_r*1.2;
 
 //Joint Bar
 joint_bar_r = bar_r*0.6;
@@ -28,8 +27,11 @@ joint_l = step_width+joint_cube[1]*1.1;
 
 //End Main Bar
 joint_amounts = step_amounts > 0 ? step_amounts+1 : step_amounts;
-bar_end_dis=  end_bar_l/2+start_bar_l/2 + joint_amounts*joint_cube[1] + step_amounts*step_width/2;;
+bar_end_dis = end_bar_l/2 + start_bar_l/2 + joint_cube[1]+ (step_width*step_amounts);
 
+//Indents
+indent_dis_main = bar_r*1.2;
+indent_dis_joint = joint_bar_r*1.3;
 
 // ---------------STARTING SHAPES---------------
 
@@ -40,7 +42,7 @@ if(print_start_bar){
         rotate(a = [90,0,0])cylinder(r=bar_r, h=start_bar_l, $fn=60, center=true);
     
         //Indents
-        k = indent_dis;
+        k = indent_dis_main;
         for(i = [[k,k],[-k,k],[k,-k],[-k,-k]]){
             translate([i[0], 0, i[1]])
                 rotate(a = [90,0,0])cylinder(r=bar_r, h=start_bar_l*2, $fn=60, center=true);
@@ -56,7 +58,7 @@ if(print_end_bar){
             rotate(a = [90,0,0])cylinder(r=bar_r, h=end_bar_l, $fn=60, center=true);
     
         //Indents
-        k = indent_dis;
+        k = indent_dis_main;
         for(i = [[k,k],[-k,k],[k,-k],[-k,-k]]){
             translate([i[0], bar_end_dis, i[1]])
                 rotate(a = [90,0,0])cylinder(r=bar_r, h=end_bar_l*2, $fn=60, center=true);
@@ -67,7 +69,8 @@ if(print_end_bar){
 //Joints Cubes
 if(step_amounts > 0){
     for(i = [0 : step_amounts]){
-        y_offset = start_bar_l/2+step_width*i-joint_cube[1]/2;
+        //y_offset = start_bar_l/2+step_width*i-joint_cube[1]/2;
+        y_offset = start_bar_l/2 + (step_width)*(i-1) + joint_l/2 - 0.5;
         startbar_printing = i != 0 || (i == 0 && print_start_bar);
         endbar_printing = i != step_amounts || (i == step_amounts && print_end_bar);
         if(print_joint_cubes && startbar_printing && endbar_printing){
@@ -77,12 +80,12 @@ if(step_amounts > 0){
                 for(side = [bar_r*3, -bar_r*3]){
                     difference(){
                         translate([side, y_offset, 0])
-                            rotate(a = [90,0,0])cylinder(r=joint_bar_r*1.05, h=joint_l, $fn=60, center=true);
+                            rotate(a = [90,0,0])cylinder(r=joint_bar_r*1.05, h=joint_l*10, $fn=60, center=true);
                         //Indents
-                        k = joint_bar_r*1.3*1.03;
+                        k = indent_dis_joint*1.03;
                         for(j = [[k,k],[-k,k],[k,-k],[-k,-k]]){
                             translate([side+j[0], y_offset, 0+j[1]])
-                                rotate(a = [90,0,0])cylinder(r=joint_bar_r, h=joint_l*2, $fn=60, center=true);
+                                rotate(a = [90,0,0])cylinder(r=joint_bar_r, h=joint_l*10, $fn=60, center=true);
                         }
                     }
                 }
@@ -96,7 +99,7 @@ if(step_amounts > 0){
                 translate([side, y_offset, 0])
                     rotate(a = [90,0,0])cylinder(r=joint_bar_r, h=joint_l, $fn=60, center=true);
                 //Indents
-                k = joint_bar_r*1.3;
+                k = indent_dis_joint;
                 for(j = [[k,k],[-k,k],[k,-k],[-k,-k]]){
                     translate([side+j[0], y_offset, 0+j[1]])
                         rotate(a = [90,0,0])cylinder(r=joint_bar_r, h=joint_l*2, $fn=60, center=true);
