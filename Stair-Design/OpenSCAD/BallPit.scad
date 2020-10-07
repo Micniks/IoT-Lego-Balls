@@ -21,5 +21,17 @@ cube([90,90,20]);
                     [9, 45],
                     [45, -6]
                 ]);
+//Hole for spinner
+translate([-15,0,-15])
+cylinder(15,6,6);
+
+//Cutting away material at the corners
+translate([-95,38,-15])
+rotate([0,0,-55])
+cube([30,80,30]);
+
+translate([-38,-78,-15])
+rotate([0,0,55])
+cube([30,80,30]);
 
 }
