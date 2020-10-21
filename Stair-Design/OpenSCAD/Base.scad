@@ -39,7 +39,7 @@ translate([15,15,-5]) {
 //Hole for column 1 and 2
 translate([-50,5,75]) {
     rotate([0,90,0]) {
-    %cylinder(200,2.5,2.5, $fn=100);
+    cylinder(200,2.5,2.5, $fn=100);
     }
     
 }
@@ -47,7 +47,7 @@ translate([-50,5,75]) {
 //Hole for column 3 and 4
 translate([-50,85,70]) {
     rotate([0,90,0]) {
-    %cylinder(200,2.5,2.5, $fn=100);
+    cylinder(200,2.5,2.5, $fn=100);
     }
     
 }
