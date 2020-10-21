@@ -27,8 +27,8 @@ translate([111,80,0]) {
 }
 
 //End stabilizer cube
-translate([60.5,197.5,20]) {
-    cube([15,15,20], center=true);
+translate([60.5,200,20]) {
+    cube([10,10,20], center=true);
 }
 
 }
@@ -39,7 +39,7 @@ translate([15,15,-5]) {
 //Hole for column 1 and 2
 translate([-50,5,75]) {
     rotate([0,90,0]) {
-    cylinder(200,2.5,2.5, $fn=100);
+    %cylinder(200,2.5,2.5, $fn=100);
     }
     
 }
@@ -47,7 +47,7 @@ translate([-50,5,75]) {
 //Hole for column 3 and 4
 translate([-50,85,70]) {
     rotate([0,90,0]) {
-    cylinder(200,2.5,2.5, $fn=100);
+    %cylinder(200,2.5,2.5, $fn=100);
     }
     
 }
