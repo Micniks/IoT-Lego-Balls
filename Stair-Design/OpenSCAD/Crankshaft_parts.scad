@@ -1,16 +1,16 @@
 // ---------------PRINT FOLLOWING PARTS---------------
 show_all = true; // Will force all parts to be shown at once.
 
-print_start_bar = false; //Color = Yellow
-print_joint_cubes = false; //Color = Cyan
+print_start_bar = true; //Color = Yellow
+print_joint_cubes = true; //Color = Cyan
 print_joint_bars = false; //Color = Blue
 print_end_bar = false; //Color = Yellow
 print_step_bar_joints = false; //Color = Green
 print_lifting_joint_bars = false; //Color = Orange
-print_slider_bar_joint = true; //Color = Red
+print_slider_bar_joint = false; //Color = Red
 print_step_holder_joint = false; //Color = Grey
 print_step_bar = false; //Color = Purple
-print_support_bars = true; //Color = Lime
+print_support_bars = false; //Color = Lime
 
 print_singles = show_all ? false : true; //Will reduce the amount of steps to 1 if true, and only print one model of each type.
 
@@ -22,7 +22,7 @@ step_amount = 4;
 
 //Main Bar
 bar_r = 5;
-start_bar_l = 60;
+start_bar_l = 30;
 end_bar_l = 10;
 
 //Joint Bar
@@ -53,7 +53,8 @@ step_bar_joint_h = joint_cube[2]*2;
 module small_bar(c, x_offset, y_offset, z_offset, length, rotation, hole){
     difference(){
         // Checking if the radius should be a for a hole or a bar
-        radius = hole ? joint_bar_r*1.05 : joint_bar_r;
+        // radius = hole ? joint_bar_r*1.05 : joint_bar_r; // ORIGINAL
+        radius = hole ? joint_bar_r*1.02 : joint_bar_r; // THIGHTER
         
         // Making the main bar
         translate([x_offset, y_offset, z_offset])
