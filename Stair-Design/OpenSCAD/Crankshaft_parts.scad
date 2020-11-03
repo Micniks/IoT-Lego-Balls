@@ -1,8 +1,9 @@
 // ---------------PRINT FOLLOWING PARTS---------------
 show_all = true; // Will force all parts to be shown at once.
+print_single = false;
 
-print_start_bar = true; //Color = Yellow
-print_joint_cubes = true; //Color = Cyan
+print_start_bar = false; //Color = Yellow
+print_joint_cubes = false; //Color = Cyan
 print_joint_bars = false; //Color = Blue
 print_end_bar = false; //Color = Yellow
 print_step_bar_joints = false; //Color = Green
@@ -10,15 +11,15 @@ print_lifting_joint_bars = false; //Color = Orange
 print_slider_bar_joint = false; //Color = Red
 print_step_holder_joint = false; //Color = Grey
 print_step_bar = false; //Color = Purple
-print_support_bars = false; //Color = Lime
+print_support_bars = true; //Color = Lime
 
-print_singles = show_all ? false : true; //Will reduce the amount of steps to 1 if true, and only print one model of each type.
+print_singles = show_all ? false : print_single; //Will reduce the amount of steps to 1 if true, and only print one model of each type.
 
 // ---------------CHANGEABLE VARIABLES---------------
 //Step Stats
 step_width = 20;
 step_length_x = 20;
-step_amount = 4;
+step_amount = 2;
 
 //Main Bar
 bar_r = 5;
@@ -87,7 +88,7 @@ module indents(c, x_offset, y_offset, z_offset, length, rotation, hole, offset_p
 
 // ---------------SETTING SHAPES---------------
 
-//Start Bar
+//Start Bar, Color = Yellow
 if(show_all ? true : print_start_bar){
     difference(){
         //Main Bar
@@ -102,7 +103,7 @@ if(show_all ? true : print_start_bar){
     }
 }
 
-//End Bar
+//End Bar, Color = Yellow
 if(show_all ? true : print_end_bar){
     difference(){
         //Main Bar
@@ -115,6 +116,28 @@ if(show_all ? true : print_end_bar){
             translate([i[0], bar_end_dis, i[1]])
                 rotate(a = [90,0,0])cylinder(r=bar_r, h=end_bar_l*2, $fn=60, center=true);
         }
+    }
+}
+
+//Support Core, Color = Lime, SIDES AND STEPS ARE FURTHER DOWN
+if(show_all ? true : print_support_bars){
+    y_length = bar_end_dis + end_bar_l*2;
+    //Center Cube
+    translate([0,y_length/2-start_bar_l/2 ,-joint_l])
+        color("lime")cube([bar_r*3,y_length,bar_r*2], center=true);
+    //Start Bar Holder
+    difference(){
+        translate([0,0,bar_r-(joint_l/2)])
+            color("lime")cube([bar_r*3,bar_r,joint_l+bar_r*2], center=true);
+        translate([0,0,0])
+            rotate(a = [90,0,0])cylinder(r=bar_r*1.05, h=bar_r*2, $fn=60, center=true);
+    }
+    //End Bar Holder
+    difference(){
+        translate([0,bar_end_dis,bar_r-(joint_l/2)])
+            color("lime")cube([bar_r*3,bar_r,joint_l+bar_r*2], center=true);
+        translate([0,bar_end_dis,0])
+            rotate(a = [90,0,0])cylinder(r=bar_r*1.05, h=bar_r*2, $fn=60, center=true);
     }
 }
 
@@ -186,32 +209,39 @@ if(step_amounts > 0){
         }
 // Step Holder Joint, Color = Grey
         if(i != 0 && (show_all ? true : print_step_holder_joint)){
-            side_array_grey = print_singles ?[bar_r/2+step_length_x/2] : [bar_r/2+step_length_x/2, -1*(bar_r/2+step_length_x/2)];
+            side_length = bar_r+step_length_x/2+0.3;
+            side_array_grey = print_singles ?[side_length] : [side_length, -side_length];
             for(side = side_array_grey){
                 difference(){
                     translate([side,y_offset,joint_cube[2]*2.55])
-                        color("grey")cube([bar_r, step_width-joint_cube[1]-1, joint_cube[2]*2], center=true);
+                        color("grey")cube([bar_r*2, step_width-joint_cube[1]-1, joint_cube[2]*2], center=true);
                     for(h = [joint_cube[2]*2, joint_cube[2]*3]){
                         small_bar("yellow", 0, y_offset, h, joint_l*2, [90,0,90], hole = true);
                     }
                 }
             }
         }
+        
 // Step Bar, Color = Purple
         if(i != 0 && (show_all ? true : print_step_bar)){
-                small_bar("purple", 0, y_offset, joint_cube[2]*3, joint_l, [90,0,90], hole = false);
+                small_bar("purple", 0, y_offset, joint_cube[2]*3, joint_l*1.4, [90,0,90], hole = false);
         }
         
-// Step Bar, Color = Lime
-        // Comment in if we decide to make supports part of this model
-        /*
+// Support-bars, Color = Lime
         if(i != 0 && (show_all ? true : print_support_bars)){
             support_side_array = print_singles ? [bar_r*6.1+bar_r] : [bar_r*6.1+bar_r,-bar_r*6.1-bar_r];
             for(side = support_side_array){
-                small_bar("lime", side, y_offset, joint_l/2, joint_l*2, [0,0,0], hole = false);
+                small_bar("lime", side, y_offset, joint_l/2, joint_l*3, [0,0,0], hole = false);
             }
+            translate([0, y_offset, -joint_l])
+                    color("lime")cube([(support_side_array[0]+bar_r)*2,bar_r*2,bar_r*2], center=true);
         }
-        */
+        // Simulate the cube of the step
+        if(i != 0 && false){
+            translate([0,y_offset,joint_cube[2]*3+15])
+                cube([20,19,30], center=true);
+        }
     }
+    
 }
 
