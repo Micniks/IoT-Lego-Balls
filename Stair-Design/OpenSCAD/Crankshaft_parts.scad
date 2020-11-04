@@ -1,5 +1,5 @@
 // ---------------PRINT FOLLOWING PARTS---------------
-show_all = true; // Will force all parts to be shown at once.
+show_all = false; // Will force all parts to be shown at once.
 print_single = false;
 
 print_start_bar = false; //Color = Yellow
@@ -19,7 +19,7 @@ print_singles = show_all ? false : print_single; //Will reduce the amount of ste
 //Step Stats
 step_width = 20;
 step_length_x = 20;
-step_amount = 2;
+step_amount = 4;
 
 //Main Bar
 bar_r = 5;
