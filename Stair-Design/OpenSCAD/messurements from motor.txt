@@ -1,0 +1,12 @@
+Motor mesurments:
+
+Head:
+Small width: 2.81
+Diameter = 4.81
+depth = 6
+
+Body:
+Diameter = 28.0
+
+Offset from centers:
+7.5

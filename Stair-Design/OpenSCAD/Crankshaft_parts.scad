@@ -1,6 +1,6 @@
 // ---------------PRINT FOLLOWING PARTS---------------
-show_all = false; // Will force all parts to be shown at once.
-print_single = false;
+show_all = true.; // Will force all parts to be shown at once.
+print_single = true;
 
 print_start_bar = false; //Color = Yellow
 print_joint_cubes = false; //Color = Cyan
@@ -9,9 +9,9 @@ print_end_bar = false; //Color = Yellow
 print_step_bar_joints = false; //Color = Green
 print_lifting_joint_bars = false; //Color = Orange
 print_slider_bar_joint = false; //Color = Red
-print_step_holder_joint = false; //Color = Grey
+print_step_holder_joint = true; //Color = Grey
 print_step_bar = false; //Color = Purple
-print_support_bars = true; //Color = Lime
+print_support_bars = false; //Color = Lime
 
 print_singles = show_all ? false : print_single; //Will reduce the amount of steps to 1 if true, and only print one model of each type.
 
@@ -55,7 +55,7 @@ module small_bar(c, x_offset, y_offset, z_offset, length, rotation, hole){
     difference(){
         // Checking if the radius should be a for a hole or a bar
         // radius = hole ? joint_bar_r*1.05 : joint_bar_r; // ORIGINAL
-        radius = hole ? joint_bar_r*1.02 : joint_bar_r; // THIGHTER
+        radius = hole ? joint_bar_r*1.01 : joint_bar_r; // THIGHTER
         
         // Making the main bar
         translate([x_offset, y_offset, z_offset])
@@ -75,7 +75,7 @@ module small_bar(c, x_offset, y_offset, z_offset, length, rotation, hole){
 
 module indents(c, x_offset, y_offset, z_offset, length, rotation, hole, offset_push){
     // The Indents on the side
-    indent_dis = hole ? indent_dis_joint*1.03 : indent_dis_joint;
+    indent_dis = hole ? indent_dis_joint*1.01 : indent_dis_joint;
     k = indent_dis;
     x_push = offset_push[0];
     y_push = offset_push[1];
@@ -244,4 +244,3 @@ if(step_amounts > 0){
     }
     
 }
-
