@@ -1,6 +1,6 @@
 // ---------------PRINT FOLLOWING PARTS---------------
-show_all = false; // Will force all parts to be shown at once.
-print_single = false;
+show_all = true; // Will force all parts to be shown at once.
+print_single = true;
 
 print_start_bar = false; //Color = Yellow
 print_joint_cubes = false; //Color = Cyan
@@ -8,11 +8,14 @@ print_joint_bars = false; //Color = Blue
 print_end_bar = false; //Color = Yellow
 print_step_bar_joints = false; //Color = Green
 print_lifting_joint_bars = false; //Color = Orange
-print_slider_bar_joint = false; //Color = Red
-print_step_holder_joint = false; //Color = Grey
+print_slider_bar_joint = true; //Color = Red
+print_step_holder_joint = true; //Color = Grey
 //print_step_bar = false; //Color = Purple REPLACED BY ORANGE
-print_support_base = true; //Color = Lime
+print_support_base = false; //Color = Lime
 print_support_bars = false; //Color = Pink
+
+// For simulating the step from other file
+print_step_box = false;
 
 print_singles = show_all ? false : print_single; //Will reduce the amount of steps to 1 if true, and only print one model of each type.
 
@@ -96,8 +99,8 @@ if(show_all ? true : print_start_bar){
         rotate(a = [90,0,0])cylinder(r=bar_r, h=start_bar_l, $fn=60, center=true);
     
         //Indents
-        k = indent_dis_main;
         /*
+        k = indent_dis_main;
         for(i = [[k,k],[-k,k],[k,-k],[-k,-k]]){
             translate([i[0], 0, i[1]])
                 rotate(a = [90,0,0])cylinder(r=bar_r, h=start_bar_l*2, $fn=60, center=true);
@@ -114,11 +117,13 @@ if(show_all ? true : print_end_bar){
             rotate(a = [90,0,0])cylinder(r=bar_r, h=end_bar_l, $fn=60, center=true);
     
         //Indents
+        /*
         k = indent_dis_main;
         for(i = [[k,k],[-k,k],[k,-k],[-k,-k]]){
             translate([i[0], bar_end_dis, i[1]])
                 rotate(a = [90,0,0])cylinder(r=bar_r, h=end_bar_l*2, $fn=60, center=true);
         }
+        */
     }
 }
 
@@ -194,7 +199,7 @@ if(step_amounts > 0){
         }
 //Lifting Joint Bars, Color = Orange
         if(i != 0 && (show_all ? true : print_lifting_joint_bars)){
-            h_array = print_singles ? [joint_cube[2]] : [joint_cube[2], joint_cube[2]*3, joint_cube[2]*4];
+            h_array = print_singles ? [joint_cube[2]] : [joint_cube[2], joint_cube[2]*4, joint_cube[2]*5];
             for(h = h_array){
                 small_bar("orange", 0, y_offset, h, joint_l*2, [90,0,90], hole = false);
             }
@@ -204,10 +209,10 @@ if(step_amounts > 0){
             side_array_red = print_singles ? [bar_r*6.1] : [bar_r*6.1, -bar_r*6.1];
             for(side = side_array_red){
                 difference(){
-                    translate([side, y_offset, joint_cube[2]*2.5])
-                        color("red")cube([bar_r*4, step_width-joint_cube[1]-1, bar_r*8], center=true);
+                    translate([side, y_offset, joint_cube[2]*3])
+                        color("red")cube([bar_r*4, step_width-joint_cube[1]-1, bar_r*10], center=true);
                     //Indents
-                    for(h = [joint_cube[2],joint_cube[2]*3, joint_cube[2]*4]){
+                    for(h = [joint_cube[2],joint_cube[2]*4, joint_cube[2]*5]){
                         small_bar("yellow", 0, y_offset, h, joint_l*2, [90,0,90], hole = true);
                     }
                     side_plus = side > 0 ? bar_r : -bar_r;
@@ -222,9 +227,9 @@ if(step_amounts > 0){
             side_array_grey = print_singles ?[side_length] : [side_length, -side_length];
             for(side = side_array_grey){
                 difference(){
-                    translate([side,y_offset,joint_cube[2]*3.50])
+                    translate([side,y_offset,joint_cube[2]*4.5])
                         color("grey")cube([bar_r*2, step_width-joint_cube[1]-1, joint_cube[2]*2], center=true);
-                    for(h = [joint_cube[2]*3, joint_cube[2]*4]){
+                    for(h = [joint_cube[2]*4, joint_cube[2]*5]){
                         small_bar("yellow", 0, y_offset, h, joint_l*2, [90,0,90], hole = true);
                     }
                 }
@@ -253,12 +258,12 @@ if(step_amounts > 0){
         if(i != 0 && (show_all ? true : print_support_bars)){
             support_side_array = print_singles ? [bar_r*6.1+bar_r] : [bar_r*6.1+bar_r,-bar_r*6.1-bar_r];
             for(side = support_side_array){
-                small_bar("pink", side, y_offset, joint_l/2, joint_l*3, [0,0,0], hole = false);
+                small_bar("pink", side, y_offset, joint_l, joint_l*4, [0,0,0], hole = false);
             }
         }
         // Simulate the cube of the step
-        if(i != 0 && false){
-            translate([0,y_offset,joint_cube[2]*3+15])
+        if(i != 0 && print_step_box){
+            translate([0,y_offset,joint_cube[2]*3.5+15])
                 cube([20,19,30], center=true);
         }
     }
