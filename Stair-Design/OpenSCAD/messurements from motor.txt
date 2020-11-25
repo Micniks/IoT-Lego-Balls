@@ -1,0 +1,9 @@
+Motor mesurments:
+
+Head radius:
+flat side length: 3,9
+round side diameter: 4,95
+length: 5
+
+Body:
+Outer Diameter = 32.0
