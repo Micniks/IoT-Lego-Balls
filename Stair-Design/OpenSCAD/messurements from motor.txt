@@ -1,12 +1,9 @@
 Motor mesurments:
 
-Head:
-Small width: 2.81
-Diameter = 4.81
-depth = 6
+Head radius:
+flat side length: 3,9
+round side diameter: 4,95
+length: 5
 
 Body:
-Diameter = 28.0
-
-Offset from centers:
-7.5
+Outer Diameter = 32.0

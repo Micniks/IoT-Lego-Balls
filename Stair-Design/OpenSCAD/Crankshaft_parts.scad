@@ -2,14 +2,14 @@
 show_all = true; // Will force all parts to be shown at once.
 print_single = true;
 
-print_start_bar = false; //Color = Yellow
+print_start_bar = true; //Color = Yellow
 print_joint_cubes = false; //Color = Cyan
 print_joint_bars = false; //Color = Blue
 print_end_bar = false; //Color = Yellow
 print_step_bar_joints = false; //Color = Green
 print_lifting_joint_bars = false; //Color = Orange
-print_slider_bar_joint = true; //Color = Red
-print_step_holder_joint = true; //Color = Grey
+print_slider_bar_joint = false; //Color = Red
+print_step_holder_joint = false; //Color = Grey
 //print_step_bar = false; //Color = Purple REPLACED BY ORANGE
 print_support_base = false; //Color = Lime
 print_support_bars = false; //Color = Pink
@@ -96,8 +96,15 @@ module indents(c, x_offset, y_offset, z_offset, length, rotation, hole, offset_p
 if(show_all ? true : print_start_bar){
     difference(){
         //Main Bar
-        rotate(a = [90,0,0])cylinder(r=bar_r, h=start_bar_l, $fn=60, center=true);
-    
+        rotate(a = [90,0,0])cylinder(r=bar_r, h=start_bar_l, $fn=100, center=true);
+        difference(){
+            translate([0,5/2 -start_bar_l/2,0])
+                rotate(a = [90,0,0])cylinder(d=5, h=5*1.1,, $fn=100, center=true);
+            translate([0,5/2 -start_bar_l/2,2.5])
+                cube([8,20,1], center=true);
+            translate([0,5/2 -start_bar_l/2,-2.5])
+                cube([8,20,1], center=true);
+        }
         //Indents
         /*
         k = indent_dis_main;
@@ -114,7 +121,7 @@ if(show_all ? true : print_end_bar){
     difference(){
         //Main Bar
         translate([0,bar_end_dis,0])
-            rotate(a = [90,0,0])cylinder(r=bar_r, h=end_bar_l, $fn=60, center=true);
+            rotate(a = [90,0,0])cylinder(r=bar_r, h=end_bar_l, $fn=100, center=true);
     
         //Indents
         /*
