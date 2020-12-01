@@ -2,7 +2,7 @@
 show_all = true; // Will force all parts to be shown at once.
 print_single = true;
 
-print_start_bar = true; //Color = Yellow
+print_start_bar = false; //Color = Yellow
 print_joint_cubes = false; //Color = Cyan
 print_joint_bars = false; //Color = Blue
 print_end_bar = false; //Color = Yellow
@@ -12,7 +12,7 @@ print_slider_bar_joint = false; //Color = Red
 print_step_holder_joint = false; //Color = Grey
 //print_step_bar = false; //Color = Purple REPLACED BY ORANGE
 print_support_base = false; //Color = Lime
-print_support_bars = false; //Color = Pink
+print_support_bars = true; //Color = Pink
 
 // For simulating the step from other file
 print_step_box = false;
@@ -265,7 +265,7 @@ if(step_amounts > 0){
         if(i != 0 && (show_all ? true : print_support_bars)){
             support_side_array = print_singles ? [bar_r*6.1+bar_r] : [bar_r*6.1+bar_r,-bar_r*6.1-bar_r];
             for(side = support_side_array){
-                small_bar("pink", side, y_offset, joint_l, joint_l*4, [0,0,0], hole = false);
+                small_bar("pink", side, y_offset, 105/4, 105, [0,0,0], hole = false);
             }
         }
         // Simulate the cube of the step

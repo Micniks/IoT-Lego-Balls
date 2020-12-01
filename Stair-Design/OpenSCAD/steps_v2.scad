@@ -5,7 +5,8 @@
 //Step head
 step_height = 15;
 step_width = 20;
-step_number = 0;
+step_number = 1;
+step_inc_height = 10;   
 
 step_increasement = step_number*step_height;
 
