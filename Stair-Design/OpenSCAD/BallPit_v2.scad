@@ -46,16 +46,16 @@ translate([55,0,0]) {
         }
     }
     //censor holder plate
-    translate([0,20,-6.25]){
-        cube([20,20,2.5], center=true);
-        translate([10,-10,-1.25]){
-            cube([2.5,20,7]);
+    translate([0,25,-6.25]){
+        cube([20,30,2.5], center=true);
+        translate([10,-15,-1.25]){
+            cube([2.5,30,7]);
         } 
     }
-    translate([0,-20,-6.25]){
-        cube([20,20,2.5], center=true);
-        translate([10,-10,-1.25]){
-            cube([2.5,20,7]);
+    translate([0,-25,-6.25]){
+        cube([20,30,2.5], center=true);
+        translate([10,-15,-1.25]){
+            cube([2.5,30,7]);
         }    
     }
 }

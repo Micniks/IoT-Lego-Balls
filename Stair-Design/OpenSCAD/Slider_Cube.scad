@@ -1,7 +1,7 @@
 // ---------------CHANGEABLE VARIABLES---------------
 
 //Step Stats
-step_width = 20;
+step_width = 25;
 step_length_x = 20;
 
 //Bars
@@ -74,7 +74,7 @@ difference(){
     }    
     //Indents
     for(h = [joint_cube[2],joint_cube[2]*4, joint_cube[2]*5]){
-        small_bar("yellow", bar_r*6.1, 0, h, joint_l*2, [90,0,90], hole = true);
+        small_bar("yellow", bar_r*7, 0, h, joint_l*2, [90,0,90], hole = true);
     }
     translate([-bar_r, 0, 0]) //sæt evt -bar_r*2 hvis hul skal være i grøn cube kun, men så skal bredden på grøn beefes lidt op
         cylinder(d=bearing+0.1, h=joint_l*10, $fn=60, center=true);

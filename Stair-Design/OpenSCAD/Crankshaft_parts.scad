@@ -1,6 +1,6 @@
 // ---------------PRINT FOLLOWING PARTS---------------
-show_all = true; // Will force all parts to be shown at once.
-print_single = true;
+show_all = false; // Will force all parts to be shown at once.
+print_single = false;
 
 print_start_bar = false; //Color = Yellow
 print_joint_cubes = false; //Color = Cyan
@@ -11,8 +11,8 @@ print_lifting_joint_bars = false; //Color = Orange
 print_slider_bar_joint = false; //Color = Red
 print_step_holder_joint = false; //Color = Grey
 //print_step_bar = false; //Color = Purple REPLACED BY ORANGE
-print_support_base = false; //Color = Lime
-print_support_bars = true; //Color = Pink
+print_support_base = true;//Color = Lime
+print_support_bars = false; //Color = Pink
 
 // For simulating the step from other file
 print_step_box = false;
@@ -23,7 +23,7 @@ print_singles = show_all ? false : print_single; //Will reduce the amount of ste
 //Step Stats
 step_width = 20;
 step_length_x = 20;
-step_amount = 4;
+step_amount = 6;
 
 //Main Bar
 bar_r = 5;
@@ -52,6 +52,9 @@ indent_dis_joint = joint_bar_r*1.3;
 
 //Step-Bar-Joint
 step_bar_joint_h = joint_cube[2]*2;
+
+//Other
+y_length = bar_end_dis + end_bar_l*2;
 
 // ---------------MODULE SHAPES---------------
 
@@ -136,10 +139,16 @@ if(show_all ? true : print_end_bar){
 
 //Support Core, Color = Lime, SIDES AND STEPS ARE FURTHER DOWN
 if(show_all ? true : print_support_base){
-    y_length = bar_end_dis + end_bar_l*2;
     //Center Cube
-    translate([0,y_length/2-start_bar_l/2 ,-joint_l])
-        color("lime")cube([bar_r*3,y_length,bar_r*2], center=true);
+    difference(){
+        translate([0,y_length/2-start_bar_l/2 ,-joint_l])
+            color("lime")cube([bar_r*3,y_length,bar_r*2], center=true);
+        /* TEXT FOR GROUP NAME
+        translate([bar_r*0.75,y_length/2-start_bar_l/2 ,-joint_l+bar_r])
+            rotate([0,0,90])text(text="Gruppe NEJ", size=10, halign="center");
+        */
+    }
+    
     
     //Start Bar Holder
     difference(){
@@ -255,6 +264,10 @@ if(step_amounts > 0){
             difference(){
                 translate([0, y_offset, -joint_l])
                     color("lime")cube([(support_side_array[0]+bar_r)*2,bar_r*2,bar_r*2], center=true);
+                /* TEXT FOR GROUP NAME
+                translate([bar_r*0.75,y_length/2-start_bar_l/2 ,-joint_l+bar_r])
+                    rotate([0,0,90])text(text="Gruppe NEJ", size=10, halign="center");
+                */
                 support_side_array = print_singles ? [bar_r*6.1+bar_r] : [bar_r*6.1+bar_r,-bar_r*6.1-bar_r];
                 for(side = support_side_array){
                     small_bar("yellow", side, y_offset, -joint_l/2, joint_l*1.2, [0,0,0], hole = true);
@@ -265,7 +278,7 @@ if(step_amounts > 0){
         if(i != 0 && (show_all ? true : print_support_bars)){
             support_side_array = print_singles ? [bar_r*6.1+bar_r] : [bar_r*6.1+bar_r,-bar_r*6.1-bar_r];
             for(side = support_side_array){
-                small_bar("pink", side, y_offset, 105/4, 105, [0,0,0], hole = false);
+                small_bar("pink", side, y_offset, 120/4, 120, [0,0,0], hole = false);
             }
         }
         // Simulate the cube of the step
