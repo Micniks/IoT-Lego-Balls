@@ -1,4 +1,4 @@
-s_diff = 0.4;
+s_diff = 0.7;
 
 difference(){
     cube([60,15,5], center=true);
@@ -11,8 +11,8 @@ difference(){
     
     
     linear_extrude(3){
-        translate([20,0])
-            text(text="L", size=10, halign="center", valign = "center");
+        translate([17,0])
+            text(text="L.2", size=10, halign="center", valign = "center");
         }
     linear_extrude(3){
         translate([-18,0])
@@ -21,7 +21,7 @@ difference(){
     }
     
     // The Pin
-    translate([0,15 + s_diff,0])
+    translate([0,15 + s_diff/2,0])
         cube([10 - s_diff, 5 - s_diff,5], center=true);
     translate([0,10,0])
         cube([5 - s_diff,10,5], center=true);
