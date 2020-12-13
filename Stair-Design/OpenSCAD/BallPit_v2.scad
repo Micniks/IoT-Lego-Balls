@@ -42,14 +42,17 @@ translate([55,0,0]) {
         }
         //censor hole
         rotate([90,0,0]) {
-            cylinder(200,3,3, $fn=100, center=true);
+            cylinder(200,4,4, $fn=100, center=true);
         }
     }
     //censor holder plate
-    translate([0,25,-6.25]){
+    translate([0,25,-21.25]){
         cube([20,30,2.5], center=true);
+        translate([-10,-17,-1.25]){
+            cube([22.5,2.5,17]);
+        }    
         translate([10,-15,-1.25]){
-            cube([2.5,30,7]);
+            cube([2.5,30,22]);
         } 
     }
     translate([0,-25,-6.25]){
