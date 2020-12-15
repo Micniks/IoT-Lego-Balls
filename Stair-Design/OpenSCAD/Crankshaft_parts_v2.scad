@@ -10,8 +10,9 @@ print_step_bar_joints = false; //Color = Green
 print_lifting_joint_bars = false; //Color = Orange
 print_slider_bar_joint = false; //Color = Red
 print_step_holder_joint = false; //Color = Grey
-//print_step_bar = false; //Color = Purple REPLACED BY ORANGE
-print_support_base = true;//Color = Lime
+print_support_base_front = false; //Color = Lime
+print_support_base_back = true; //Color = Lime
+print_support_base_step = false; //Color = Purple
 print_support_bars = false; //Color = Pink
 
 // For simulating the step from other file
@@ -23,7 +24,7 @@ print_singles = show_all ? false : print_single; //Will reduce the amount of ste
 //Step Stats
 step_width = 20;
 step_length_x = 20;
-step_amount = 6;
+step_amount = 4;
 
 //Main Bar
 bar_r = 5;
@@ -55,6 +56,7 @@ step_bar_joint_h = joint_cube[2]*2;
 
 //Other
 y_length = bar_end_dis + end_bar_l*2;
+step_support_width = step_width-0.3;
 
 // ---------------MODULE SHAPES---------------
 
@@ -137,20 +139,16 @@ if(show_all ? true : print_end_bar){
     }
 }
 
-//Support Core, Color = Lime, SIDES AND STEPS ARE FURTHER DOWN
-if(show_all ? true : print_support_base){
-    //Center Cube
-    difference(){
-        translate([0,y_length/2-start_bar_l/2 ,-joint_l])
-            color("lime")cube([bar_r*3,y_length,bar_r*2], center=true);
-        /* TEXT FOR GROUP NAME
-        translate([bar_r*0.75,y_length/2-start_bar_l/2 ,-joint_l+bar_r])
-            rotate([0,0,90])text(text="Gruppe NEJ", size=10, halign="center");
-        */
-    }
-    
-    
+//Support Core, Color = Lime
+if(show_all ? true : print_support_base_front){
     //Start Bar Holder
+    y_length = step_width*2+0.3;
+    translate([0,0,-joint_l])
+            color("lime")cube([bar_r*3,y_length,bar_r*2], center=true);
+    translate([0, y_length/4+(step_width-0.3)/2+10.2, -joint_l])
+        color("lime")cube([10 - 0.7, 5 - 0.7,bar_r*2], center=true);
+    translate([0, y_length/4+(step_width-0.3)/2+5, -joint_l])
+        color("lime")cube([5 - 0.7,10,bar_r*2], center=true);
     difference(){
         translate([0,0,bar_r/2-(joint_l/2)])
             color("lime")cube([bar_r*4,bar_r,joint_l+bar_r*2*1.5], center=true);
@@ -159,24 +157,40 @@ if(show_all ? true : print_support_base){
         translate([0,0,(bar_r*4/2)])
             rotate(a = [90,0,0])cube([(bar_r*1.05)*2,bar_r*4,bar_r*10], center=true);
     }
+}
+if(show_all ? true : print_support_base_back){
     
     //End Bar Holder
+    y_length = step_width+0.3;
+    
     difference(){
-        translate([0,bar_end_dis,bar_r/2-(joint_l/2)])
-            color("lime")cube([bar_r*4,bar_r,joint_l+bar_r*2*1.5], center=true);
+        union(){
+            translate([0,bar_end_dis,bar_r/2-(joint_l/2)])
+                color("lime")cube([bar_r*4,bar_r,joint_l+bar_r*2*1.5], center=true);
+            translate([0,bar_end_dis,-joint_l])
+                color("lime")cube([bar_r*3,y_length,bar_r*2], center=true);
+        }
         translate([0,bar_end_dis,0])
             rotate(a = [90,0,0])cylinder(r=bar_r*1.05, h=bar_r*2, $fn=60, center=true);
         translate([0,bar_end_dis,(bar_r*4/2)])
             rotate(a = [90,0,0])cube([(bar_r*1.05)*2,bar_r*4,bar_r*10], center=true);
+        translate([0, bar_end_dis-0.2, -joint_l])
+            cube([10,5,bar_r*2.5], center=true);
+        translate([0, bar_end_dis-5.2, -joint_l])
+            cube([5,10,bar_r*2.5], center=true);
+        translate([-5, bar_end_dis-0.2, -joint_l+6.2])
+            rotate([90,0,0])linear_extrude(height = 5, center=true)
+                polygon (points = [[0, 0],[10, 0],[5, 12]]);
     }
+        
 }
 
 //For Each Step
 if(step_amounts > 0){
     for(i = [0 : step_amounts]){
+        y_offset = start_bar_l/2 + (step_width)*(i-1) + joint_l/2 - 0.5;
         
 //Joints Cubes, Color = Cyan
-        y_offset = start_bar_l/2 + (step_width)*(i-1) + joint_l/2 - 0.5;
         startbar_printing = i != 0 || (i == 0 && (show_all ? true : print_start_bar));
         endbar_printing = i != step_amounts || (i == step_amounts && (show_all ? true : print_end_bar));
         if((show_all ? true : print_joint_cubes) && startbar_printing && endbar_printing){
@@ -252,23 +266,24 @@ if(step_amounts > 0){
             }
         }
         
-// Step Bar, Color = Purple
-        /*
-        if(i != 0 && (show_all ? true : print_step_bar)){
-                small_bar("purple", 0, y_offset, joint_cube[2]*3, joint_l*1.4, [90,0,90], hole = false);
-        }
-        */
-        
-// Support-base, Color = Lime
-        if(i != 0 && (show_all ? true : print_support_base)){
+// Support-base, Color = Purple
+        if(i != 0 && (show_all ? true : print_support_base_step)){
             difference(){
                 translate([0, y_offset, -joint_l])
-                    color("lime")cube([(support_side_array[0]+bar_r)*2,bar_r*2,bar_r*2], center=true);
-                support_side_array = print_singles ? [bar_r*6.1+bar_r] : [bar_r*6.1+bar_r,-bar_r*6.1-bar_r];
+                    color("purple")cube([(support_side_array[0]+bar_r)*2,step_support_width,bar_r*2], center=true);
+                support_side_array = [bar_r*6.1+bar_r,-bar_r*6.1-bar_r];
                 for(side = support_side_array){
                     small_bar("yellow", side, y_offset, -joint_l, joint_l*1.2, [0,0,0], hole = true);
                 }
+                translate([0, y_offset, -joint_l])
+                    cube([10,5,bar_r*4], center=true);
+                translate([0, y_offset-5, -joint_l])
+                    cube([5,10,bar_r*4], center=true);
             }
+            translate([0, y_offset+(step_width-0.3)/2+10.2, -joint_l])
+                color("purple")cube([10 - 0.7, 5 - 0.7,bar_r*2], center=true);
+            translate([0, y_offset+(step_width-0.3)/2+5, -joint_l])
+                color("purple")cube([5 - 0.7,10,bar_r*2], center=true);
         }
 // Support-bars, Color = Pink
         if(i != 0 && (show_all ? true : print_support_bars)){
