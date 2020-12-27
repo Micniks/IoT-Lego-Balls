@@ -68,6 +68,17 @@ module make_lowerpart(cube_lengthX,cube_widthY,cube_heightZ){
         //making the hole in buttomsection
         translate([0,0,-(cube_heightZ/2)+6-step_increasement/2])
             small_bar("yellow", 0, 0, 0, 40, [0,90,0], hole = true);
+        
+        //making the marking
+        side_diff_of_text = step_width/2-0.5;
+        for(side = [side_diff_of_text, -side_diff_of_text]){
+            rotate_side = side > 0 ? 90 : -90;
+            translate([side,0,10])
+                rotate([90,0,rotate_side])
+                    linear_extrude(1){
+                        text(text=str(step_number), size=8, halign="center", valign = "center");
+                    }
+        }
     } 
     
  difference(){
@@ -91,6 +102,7 @@ module make_lowerpart(cube_lengthX,cube_widthY,cube_heightZ){
 
 
 // ---------------OTHER PARTS---------------
+
 
 //making the body cylinder
     //translate([cube_lengthX/2,0,cube_heightZ-5])

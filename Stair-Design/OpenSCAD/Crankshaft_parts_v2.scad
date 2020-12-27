@@ -1,17 +1,17 @@
 // ---------------PRINT FOLLOWING PARTS---------------
-show_all = false; // Will force all parts to be shown at once.
-print_single = false;
+show_all = true; // Will force all parts to be shown at once.
+print_single = true;
 
 print_start_bar = false; //Color = Yellow
 print_joint_cubes = false; //Color = Cyan
 print_joint_bars = false; //Color = Blue
 print_end_bar = false; //Color = Yellow
-print_step_bar_joints = false; //Color = Green
+print_step_bar_joints = true; //Color = Green
 print_lifting_joint_bars = false; //Color = Orange
 print_slider_bar_joint = false; //Color = Red
 print_step_holder_joint = false; //Color = Grey
 print_support_base_front = false; //Color = Lime
-print_support_base_back = true; //Color = Lime
+print_support_base_back = false; //Color = Lime
 print_support_base_step = false; //Color = Purple
 print_support_bars = false; //Color = Pink
 
@@ -157,6 +157,7 @@ if(show_all ? true : print_support_base_front){
         translate([0,0,(bar_r*4/2)])
             rotate(a = [90,0,0])cube([(bar_r*1.05)*2,bar_r*4,bar_r*10], center=true);
     }
+    echo(joint_l+bar_r);
 }
 if(show_all ? true : print_support_base_back){
     
