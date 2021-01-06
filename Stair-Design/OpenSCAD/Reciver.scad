@@ -60,6 +60,16 @@ if(print_main){
             rotate([90,0,90])
                 linear_extrude(height = thickness)
                     polygon (points = [[0, 0],[bottom_obstruction_width, 0],[bottom_obstruction_width/2, infill_height]]);
+        
+        //Connector Holes
+        positions = [
+            [0,((width/2 - bottom_obstruction_width/2)/2),0],
+            [0,width - ((width/2 - bottom_obstruction_width/2)/2),0]];
+        for(position = positions){
+            translate([thickness/2, 0, 0])
+                translate(position)
+                    cylinder(d=connector_hole_dia+0.4, h=connector_hole_height*2, $fn=60);
+        }
     }
     
     // Ball Holder
@@ -78,13 +88,14 @@ if(print_main){
     
         //Connector Holes
         diff = connector_hole_position_length_diff;
+        y_offset = width/2 - holder_width/2;
         positions = [
             [diff,diff,0],
             [holder_length-diff,diff,0],
             [diff,holder_width-diff,0],
             [holder_length-diff,holder_width-diff,0]];
         for(position = positions){
-            translate([thickness, width/2 - holder_width/2, 0])
+            translate([thickness, y_offset, 0])
                 translate(position)
                     cylinder(d=connector_hole_dia+0.4, h=connector_hole_height*2, $fn=60);
         }
@@ -98,7 +109,9 @@ if(print_step){
         [x_offset+diff,diff,step_height],
         [x_offset+holder_length-diff,diff,step_height],
         [x_offset+diff,holder_width-diff,step_height],
-        [x_offset+holder_length-diff,holder_width-diff,step_height]];
+        [x_offset+holder_length-diff,holder_width-diff,step_height],
+        [x_offset-thickness/2,((width/2 - bottom_obstruction_width/2)/2)-(width/2 - holder_width/2),step_height],
+        [x_offset-thickness/2,width - ((width/2 - bottom_obstruction_width/2)/2)-(width/2 - holder_width/2),step_height]];
 
     difference(){
         //Main Block
@@ -113,21 +126,20 @@ if(print_step){
             cube([thickness,bottom_obstruction_width,step_height]);
         //Connector Holes
         diff = connector_hole_position_length_diff;
-        positions = [
-            [x_offset+diff,diff,0],
-            [x_offset+holder_length-diff,diff,0],
-            [x_offset+diff,holder_width-diff,0],
-            [x_offset+holder_length-diff,holder_width-diff,0]];
         for(position = positions){
-            translate([thickness, width/2 - holder_width/2, 0])
+            translate([thickness, width/2 - holder_width/2, -step_height])
                 translate(position)
                     cylinder(d=connector_hole_dia+0.4, h=connector_hole_height+0.4, $fn=60);
         }
         //Small indents
         for(position = positions){
             translate(position)
-                translate([thickness, width/2 - holder_width/2, 19]) // Was 18 on z-axis
-                    sphere(r=10, $fn=100);
+                difference(){
+                    translate([thickness, width/2 - holder_width/2, 19.2-step_height])
+                        sphere(r=10, $fn=100);
+                    translate([thickness-10,width/2 - holder_width/2-10,-10])
+                        cube([20,20,9.6]);
+                }
         }
     }
 

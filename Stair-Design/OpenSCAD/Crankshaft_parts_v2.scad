@@ -1,18 +1,18 @@
 // ---------------PRINT FOLLOWING PARTS---------------
-show_all = true; // Will force all parts to be shown at once.
+show_all = false; // Will force all parts to be shown at once.
 print_single = true;
 
 print_start_bar = false; //Color = Yellow
 print_joint_cubes = false; //Color = Cyan
 print_joint_bars = false; //Color = Blue
 print_end_bar = false; //Color = Yellow
-print_step_bar_joints = true; //Color = Green
+print_step_bar_joints = false; //Color = Green
 print_lifting_joint_bars = false; //Color = Orange
 print_slider_bar_joint = false; //Color = Red
 print_step_holder_joint = false; //Color = Grey
 print_support_base_front = false; //Color = Lime
-print_support_base_back = false; //Color = Lime
-print_support_base_step = false; //Color = Purple
+print_support_base_back = true; //Color = Lime
+print_support_base_step = true; //Color = Purple
 print_support_bars = false; //Color = Pink
 
 // For simulating the step from other file
@@ -146,9 +146,9 @@ if(show_all ? true : print_support_base_front){
     translate([0,0,-joint_l])
             color("lime")cube([bar_r*3,y_length,bar_r*2], center=true);
     translate([0, y_length/4+(step_width-0.3)/2+10.2, -joint_l])
-        color("lime")cube([10 - 0.7, 5 - 0.7,bar_r*2], center=true);
+        color("lime")cube([10+1, 5+1,bar_r*2], center=true);
     translate([0, y_length/4+(step_width-0.3)/2+5, -joint_l])
-        color("lime")cube([5 - 0.7,10,bar_r*2], center=true);
+        color("lime")cube([5+1 ,10,bar_r*2], center=true);
     difference(){
         translate([0,0,bar_r/2-(joint_l/2)])
             color("lime")cube([bar_r*4,bar_r,joint_l+bar_r*2*1.5], center=true);
@@ -175,13 +175,15 @@ if(show_all ? true : print_support_base_back){
             rotate(a = [90,0,0])cylinder(r=bar_r*1.05, h=bar_r*2, $fn=60, center=true);
         translate([0,bar_end_dis,(bar_r*4/2)])
             rotate(a = [90,0,0])cube([(bar_r*1.05)*2,bar_r*4,bar_r*10], center=true);
+        /*
         translate([0, bar_end_dis-0.2, -joint_l])
             cube([10,5,bar_r*2.5], center=true);
         translate([0, bar_end_dis-5.2, -joint_l])
-            cube([5,10,bar_r*2.5], center=true);
+            %cube([5,10,bar_r*2.5], center=true);
         translate([-5, bar_end_dis-0.2, -joint_l+6.2])
             rotate([90,0,0])linear_extrude(height = 5, center=true)
                 polygon (points = [[0, 0],[10, 0],[5, 12]]);
+        */
     }
         
 }

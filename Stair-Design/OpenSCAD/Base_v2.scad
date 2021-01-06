@@ -7,6 +7,8 @@ Huller: 38 mm i mellem
 Huller Diameter = 3 mm
 Holder tykkelse: 8 mm
 
+Base Width: 55 mm
+Base whole distance: 30 mm
 */
 motorDiameter = 32.08+1;
 
@@ -24,14 +26,14 @@ baseCutOutLength = baseLength-15;
 holeWidth = 40;
 
 
-/*
+
 difference(){
     cube([baseWidth,baseLength,baseThick]);
     translate([5,baseLength/2-(baseCutOutLength/2),0]){
         cube([baseCutOutWidth,baseCutOutLength,baseThick*2]);
     }    
 }
-*/
+
 translate([baseWidth,baseLength/2-(motorMountWidth/2),0]){    
             difference(){
             union(){
@@ -57,12 +59,12 @@ translate([baseWidth,baseLength/2-(motorMountWidth/2),0]){
     }    
 
 }    
-/*
-for(postion = [[0,57.5,0], [0,0,0], [32.5,0,0],[32.5,57.5,0]]){
+
+for(postion = [[0,55+5,0], [0,-2.5,0], [30,-2.5,0],[30,55+5,0]]){
     translate(postion){
         difference(){
-        cube([7.5,7.5,110]);
-        translate([3.75,10,105]){
+        cube([7.5,7.5,115]);
+        translate([3.75,10,110]){
         rotate([90,0,0]) {
           cylinder(20,1.5,1.5, $fn=100);
           }   
@@ -70,14 +72,7 @@ for(postion = [[0,57.5,0], [0,0,0], [32.5,0,0],[32.5,57.5,0]]){
       }
     }
 }    
-*/    
-
-
-
-
-
-
-
+   
 
 
 /*-------------GraveYard-------------*/
