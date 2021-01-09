@@ -14,7 +14,7 @@ motorDiameter = 32.08+1;
 
 baseWidth = 40;
 baseLength = 65;
-baseThick = 10;
+baseThick = 13;
 
 motorMountWidth = 50;
 motorMountLength = 15;
@@ -26,13 +26,14 @@ baseCutOutLength = baseLength-15;
 holeWidth = 40;
 
 
-
+/*
 difference(){
     cube([baseWidth,baseLength,baseThick]);
     translate([5,baseLength/2-(baseCutOutLength/2),0]){
         cube([baseCutOutWidth,baseCutOutLength,baseThick*2]);
     }    
 }
+*/
 
 translate([baseWidth,baseLength/2-(motorMountWidth/2),0]){    
             difference(){
@@ -46,7 +47,7 @@ translate([baseWidth,baseLength/2-(motorMountWidth/2),0]){
                 cube([motorMountThick,motorDiameter,99]);
             }   
                 rotate([0,90,0]){
-                    translate([-27,motorMountWidth/2,-20]){
+                    translate([-17 - baseThick,motorMountWidth/2,-20]){
                         cylinder(46,d=motorDiameter, $fn=60);
                         for(side = [holeWidth/2,-(holeWidth/2)]){
                             translate([0,side,20]){
@@ -60,6 +61,7 @@ translate([baseWidth,baseLength/2-(motorMountWidth/2),0]){
 
 }    
 
+/*
 for(postion = [[0,55+5,0], [0,-2.5,0], [30,-2.5,0],[30,55+5,0]]){
     translate(postion){
         difference(){
@@ -72,7 +74,7 @@ for(postion = [[0,55+5,0], [0,-2.5,0], [30,-2.5,0],[30,55+5,0]]){
       }
     }
 }    
-   
+*/   
 
 
 /*-------------GraveYard-------------*/
