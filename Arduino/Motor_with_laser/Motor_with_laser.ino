@@ -25,7 +25,7 @@ void loop() {
   if(ballDetected) {
     ballDetected = false;
     digitalWrite(motorStart, HIGH);
-    delay(5500); // waits 5.5 secs until turning off the motor again
+    delay(7000); // waits 7 secs until turning off the motor again
   } else {
     digitalWrite(motorStart, LOW);  
   }
